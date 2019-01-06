@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Dan Roberts">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Snowball Challenges - Holiday Hack Challenge 2017 Solution</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Snowball Challenges";
+    var mkdocs_page_input_path = "snowballs.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> Holiday Hack Challenge 2017 Solution</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="index.html">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="servers.html">Servers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="terminals.html">Terminals</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="snowballs.html">Snowball Challenges</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#winconceivable-the-cliffs-of-winsanity">Winconceivable: The Cliffs of Winsanity</a></li>
+    
+
+    <li class="toctree-l2"><a href="#winter-wonder-landing">Winter Wonder Landing</a></li>
+    
+
+    <li class="toctree-l2"><a href="#cryokinetic-magic">Cryokinetic Magic</a></li>
+    
+
+    <li class="toctree-l2"><a href="#theres-snow-place-like-home">There's Snow Place Like Home</a></li>
+    
+
+    <li class="toctree-l2"><a href="#bumbles-bounce">Bumbles Bounce</a></li>
+    
+
+    <li class="toctree-l2"><a href="#i-dont-think-were-in-kansas-anymore">I Don't Think We're in Kansas Anymore</a></li>
+    
+
+    <li class="toctree-l2"><a href="#oh-wait-maybe-we-are">Oh Wait!  Maybe we are...</a></li>
+    
+
+    <li class="toctree-l2"><a href="#were-off-to-see-the">We're Off to See the...</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="eggs.html">Easter Eggs</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="appendix.html">Appendix</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Holiday Hack Challenge 2017 Solution</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Snowball Challenges</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>The snowball challenges are a 3D physics-based game developed with <a href="https://www.babylonjs.com/">Babylon.JS</a>.  It's like a wintery Marble Madness, except you maneuver the ball by positioning a set of tools on the board that affect its speed and direction before the ball starts rolling.</p>
+<p>There are many ways to solve each level.  Below, I offer a collection of solutions and tips that might help you if you're stuck.  My solutions were by no means optimized, but they got the job done!</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You don't have to finish all of the objectives on each board before the next board is unlocked.  Just roll a snowball over the yellow landing pad, and the next level will be unlocked.  Do this for each level, and solve the terminal challenges to collect hints and tools for later in the game.</p>
+<p>After you've collected all of the available tools, return to each level and complete the remaining objectives.  Your task will be easier now that you have more tools at your disposal.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although you don't have to earn all of the achievements in a single run, it is fun (and sometimes very frustrating) to try!</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Videos were captured with <a href="http://www.screentogif.com/">ScreenToGif</a>.</p>
+</div>
+<h1 id="winconceivable-the-cliffs-of-winsanity">Winconceivable: The Cliffs of Winsanity</h1>
+<p>Instead of using the snowball to move the crate onto the lift, use a conveyor and candycane.  This ensures the crate is in position before the snowball reaches the landing pad, and reduces the complexity of the snowball's path.</p>
+<p><img alt="Screenshot" src="img/snowball-1-crate.png" /></p>
+<p>On the surface, this appears to be an easy level, but there ended up being a lot of moving parts in the solution.</p>
+<p><img alt="Screenshot" src="img/snowball-1-video.gif" /></p>
+<h1 id="winter-wonder-landing">Winter Wonder Landing</h1>
+<p><img alt="Screenshot" src="img/snowball-2-video.gif" /></p>
+<h1 id="cryokinetic-magic">Cryokinetic Magic</h1>
+<p><img alt="Screenshot" src="img/snowball-3-video.gif" /></p>
+<h1 id="theres-snow-place-like-home">There's Snow Place Like Home</h1>
+<p><img alt="Screenshot" src="img/snowball-4-video.gif" /></p>
+<h1 id="bumbles-bounce">Bumbles Bounce</h1>
+<p>Candycane sticks were the only tool that seemed to slow the descent of the snowballs to prevent them from knocking gifts out of bounds.</p>
+<p><img alt="Screenshot" src="img/snowball-5.png" /></p>
+<h1 id="i-dont-think-were-in-kansas-anymore">I Don't Think We're in Kansas Anymore</h1>
+<p>This level is by far the most challenging.  Not only are the waypoints hidden in a sea of poppies, there is a hidden level that you can only get to by sending a snowball through what appears to be a dreaded interdimensional tornado.</p>
+<p><img alt="Screenshot" src="img/snowball-6-video.gif" /></p>
+<p>In the screenshot below, the location of the waypoints are marked in yellow, and the terminal is marked with purple.</p>
+<p><img alt="Screenshot" src="img/snowball-6-locations.png" /></p>
+<h1 id="oh-wait-maybe-we-are">Oh Wait!  Maybe we are...</h1>
+<p>This level was a relief after the complexity of the last one.  Only three conveyors are needed, but key is to counteract the spin on the ball so that it goes down the hill in a straight line.</p>
+<p><img alt="Screenshot" src="img/snowball-7.png" /></p>
+<h1 id="were-off-to-see-the">We're Off to See the...</h1>
+<p>On the last level, topple the sphere at the top of the main structure to find out who is responsible for the snowball attacks.  A couple of points to keep in mind:</p>
+<ol>
+<li>The speed and angle at which a snowball enters a portal determines how it exits at the other end.</li>
+<li>Tools can be fastened to the sides of the structure, not just horizontal surfaces.</li>
+<li>The sphere has to fall out of bounds before the last snowball does, otherwise you don't earn the achievement.</li>
+</ol>
+<p><img alt="Screenshot" src="img/snowball-8-video.gif" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="eggs.html" class="btn btn-neutral float-right" title="Easter Eggs">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="terminals.html" class="btn btn-neutral" title="Terminals"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="terminals.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="eggs.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+
+</body>
+</html>

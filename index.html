@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  <meta name="author" content="Dan Roberts">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Introduction - Holiday Hack Challenge 2017 Solution</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Introduction";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> Holiday Hack Challenge 2017 Solution</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="index.html">Introduction</a>
+    <ul class="subnav">
+            
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="servers.html">Servers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="terminals.html">Terminals</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="snowballs.html">Snowball Challenges</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="eggs.html">Easter Eggs</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="appendix.html">Appendix</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Holiday Hack Challenge 2017 Solution</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Introduction</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><center><strong>Holiday Hack Challege 2017 Solution - by Dan Roberts</strong></center></p>
+<p><img alt="Holiday Hack Challenge 2017" src="img/titlepage.png" /></p>
+<p><strong>Introduction</strong></p>
+<p>A big thank you to Ed Skoudis, the folks at Counter Hack and SANS, and all of the other extremely talented people who lend their genius and creativity to keep this holiday tradition going!</p>
+<p>This year's challenge was themed after Wicked, the musical inspired by L. Frank Baum's The Wizard of Oz.  Familiar characters and tunes are found peppered throughout the challenge, and we learn that the North Pole Elves and the Munchkins of Oz share a common heritage.  This was a highly entertaining as well as technical challenge.</p>
+<p>If you haven't tried your hand at solving the Holiday Hack Challenge yet, I suggest visiting <a href="http://2017.holidayhackchallenge.com">http://2017.holidayhackchallenge.com</a> and giving it a go before reading all the spoilers.  Anyone from beginner to advanced is bound to learn something, or at least have a little fun.</p>
+<p><strong>Answers</strong></p>
+<p><strong>1) Visit the North Pole and Beyond at the Winter Wonder Landing Level to collect the first page of The Great Book using a giant snowball. What is the title of that page?</strong></p>
+<p><em>About This Book</em> is page 1 of The Great Book.</p>
+<p><strong>2) Investigate the Letters to Santa application at https://l2s.northpolechristmastown.com. What is the topic of The Great Book page available in the web root of the server? What is Alabaster Snowball's password?</strong></p>
+<p><em>On the Topic of Flying Animals</em> is page 2 of The Great Book, and the password is <em>stream_unhappy_buy_loss</em>.</p>
+<p><strong>3) The North Pole engineering team uses a Windows SMB server for sharing documentation and correspondence. Using your access to the Letters to Santa server, identify and enumerate the SMB file-sharing server. What is the file server share name?</strong></p>
+<p>The SMB server IP address is <em>10.142.0.7</em> and the share name is <em>Filestor</em>.</p>
+<p><strong>4) Elf Web Access (EWA) is the preferred mailer for North Pole elves, available internally at http://mail.northpolechristmastown.com. What can you learn from The Great Book page found in an e-mail on that server?</strong></p>
+<p><em>Rise of the Lollipop Guild</em> is page 4 of The Great Book.</p>
+<p><strong>5) How many infractions are required to be marked as naughty on Santa's Naughty and Nice List? What are the names of at least six insider threat moles? Who is throwing the snowballs from the top of the North Pole Mountain and what is your proof?</strong></p>
+<p>Answering this question requires some data analysis.  Santa's list of who's naughty and nice can be found on the SMB fileshare, however all of the detailed infraction data has been removed for GDPR compliance.  Fortunately, the North Pole Police Department website contains a publicly accessible database of infractions, which we can use to de-anonymize the naughty and nice list. Using the combined data, along with a memo naming two confirmed moles, we can determine how many infractions are needed to make the naughty list, and identify other people on the list who have the same MO as the known munchkin moles.</p>
+<ul>
+<li>
+<p>A minimum of three infractions is needed in order to be marked naughty, however it doesn't appear to be automatic until you've reached 5 infractions.  For 3 and 4 infractions, there is a mixture of naughty and nice based on other criteria.</p>
+<table>
+<thead>
+<tr>
+<th>Infraction count</th>
+<th>Naughty</th>
+<th>Nice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>311</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>97</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>30</td>
+</tr>
+<tr>
+<td>4</td>
+<td>23</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>42</td>
+<td>0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Suspected munchkin moles: Bini Aru, Kirsty Evans, Nina Fitzgerald, Beverly Khalil, Sheri Lewis, Wesley Morton, Boq Questrian.</p>
+<ul>
+<li>
+<p>A document on the SMB server provided Bini Aru and Boq Questrian as confirmed munchkin moles, and listed their behaviors: aggravated pulling of hair, giving super atomic wedgies, and throwing rocks at people. </p>
+</li>
+<li>
+<p>The infractions data shows that Bini was accused of both pulling hair and giving wedgies, and Boq was accused of both throwing rocks and giving wedgies.</p>
+</li>
+<li>
+<p>The remaining suspects were found from analyzing the infractions data for individuals who were engaged in at least two of the three behaviors.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See the discussion about the North Pole Police Department on the Servers page for the data analysis methods.</p>
+</div>
+<ul>
+<li>Abominable Snowman was throwing the snowballs.  This information is provided in the first NPC chat.</li>
+</ul>
+<p><img alt="Screenshot" src="img/chat1.png" /></p>
+<p><strong>6) The North Pole engineering team has introduced an Elf as a Service (EaaS) platform to optimize resource allocation for mission-critical Christmas engineering projects at http://eaas.northpolechristmastown.com. Visit the system and retrieve instructions for accessing The Great Book page from C:\greatbook.txt. Then retrieve The Great Book PDF file by following those directions. What is the title of The Great Book page?</strong></p>
+<p><em>The Dreaded Inter-Dimensional Tornadoes</em> is page 6 of The Great Book.</p>
+<p><strong>7) Like any other complex SCADA systems, the North Pole uses Elf-Machine Interfaces (EMI) to monitor and control critical infrastructure assets. These systems serve many uses, including email access and web browsing. Gain access to the EMI server through the use of a phishing attack with your access to the EWA server. Retrieve The Great Book page from C:\GreatBookPage7.pdf. What does The Great Book page describe?</strong></p>
+<p><em>Regarding the Witches of Oz</em> is page 7 of The Great Book.</p>
+<p><strong>8) Fetch the letter to Santa from the North Pole Elf Database at http://edb.northpolechristmastown.com. Who wrote the letter?</strong></p>
+<p><em>The Wizard of Oz</em> wrote the letter to Santa</p>
+<p><img alt="Screenshot" src="img/wizard_of_oz_to_santa_d0t011d408nx.png" /></p>
+<p><strong>9) Which character is ultimately the villain causing the giant snowball problem. What is the villain's motive?</strong></p>
+<p><em>Glinda the Good Witch</em> is the villain.  She wanted to spark a war between the Munchkins and Elves so that she could sell her spells to both sides for profit.</p>
+<p><img alt="Screenshot" src="img/chat2.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="servers.html" class="btn btn-neutral float-right" title="Servers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="servers.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-01-06 22:41:42
+-->
